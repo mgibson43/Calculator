@@ -21,6 +21,7 @@ html {
   padding: 20px;
   width: 500px;
   align-self: center;
+  border-radius: 10px;
 }
 
 .btn-box {
@@ -39,4 +40,6 @@ html {
   padding: 20px;
   background-color: antiquewhite;
   text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
 }
