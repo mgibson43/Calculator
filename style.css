@@ -22,6 +22,7 @@ html {
   width: 500px;
   align-self: center;
   border-radius: 10px;
+  text-align: right;
 }
 
 .btn-box {
@@ -33,7 +34,7 @@ html {
 }
 
 .empty {
-  grid-column: span 3;
+  grid-column: span 2;
 }
 
 .btn {
