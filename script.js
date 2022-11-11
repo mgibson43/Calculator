@@ -9,6 +9,7 @@ const multiply = document.querySelector('.multiplication')
 const divide = document.querySelector('.division');
 const decimal = document.querySelector('.decimal');
 const equals = document.querySelector('.equals');
+const back = document.querySelector('.backspace');
 
 // Number DOM Elements
 const zero = document.querySelector('.zero');
@@ -41,6 +42,22 @@ function clear() {
   current.textContent = '0';
 }
 
+// Removes last entry
+function backspace() {
+  const displayArr = [...current.textContent];
+  if (displayArr[displayArr.length-1] === ' ') {
+    displayArr.splice(displayArr.length-3, displayArr.length);
+  } else {
+    displayArr.splice(displayArr.length-1, displayArr.length);
+  }
+
+  if (displayArr.length === 0) {
+    current.textContent = '0';
+  } else {
+    current.textContent = displayArr.join('');
+  }
+}
+
 // Number event listeners
 zero.addEventListener('click', updateDisplayNum.bind(this, zero.textContent));
 one.addEventListener('click', updateDisplayNum.bind(this, one.textContent));
@@ -61,3 +78,4 @@ add.addEventListener('click', updateDisplayOper.bind(this, add.textContent));
 subtract.addEventListener('click', updateDisplayOper.bind(this, subtract.textContent));
 multiply.addEventListener('click', updateDisplayOper.bind(this, multiply.textContent));
 divide.addEventListener('click', updateDisplayOper.bind(this, divide.textContent));
+back.addEventListener('click', backspace);
