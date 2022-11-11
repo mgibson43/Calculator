@@ -3,10 +3,10 @@
 // Operator/Misc DOM elements
 const current = document.querySelector('.display');
 const clr = document.querySelector('.clear');
-const add = document.querySelector('.addition');
-const subtract = document.querySelector('.subtraction');
-const multiply = document.querySelector('.multiplication')
-const divide = document.querySelector('.division');
+const addition = document.querySelector('.addition');
+const subtraction = document.querySelector('.subtraction');
+const multiplication = document.querySelector('.multiplication')
+const division = document.querySelector('.division');
 const decimal = document.querySelector('.decimal');
 const equals = document.querySelector('.equals');
 const back = document.querySelector('.backspace');
@@ -23,18 +23,21 @@ const seven = document.querySelector('.seven');
 const eight = document.querySelector('.eight');
 const nine = document.querySelector('.nine');
 
+let isOperated = false;
 
 // Updates display
 function updateDisplayNum(char) {
   if (current.textContent === '0') {
     current.textContent = char;
   } else {
-    current.textContent = `${current.textContent}${char}`;
+    isOperated === true ? current.textContent = `${char}` : current.textContent = `${current.textContent}${char}`;
   };
+  isOperated = false;
 }
 
 function updateDisplayOper(char) {
-  current.textContent = `${current.textContent} ${char} `;
+  isOperated === true ? current.textContent = `ans ${char} ` : current.textContent = `${current.textContent} ${char} `;
+  isOperated = false;
 }
 
 // Clears display
@@ -58,6 +61,58 @@ function backspace() {
   }
 }
 
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  return a / b;
+  console.log(a, b);
+}
+
+function operate() {
+  isOperated = true;
+  const dispArr = current.textContent.split(' ').filter(char => char !== ' ');
+
+  while (dispArr.includes('/')) {
+    const index = dispArr.indexOf('/');
+    dispArr[index - 1] = `${divide(Number(dispArr[index - 1]), Number(dispArr[index + 1]))}`;
+    dispArr.splice(index,2);
+    console.log(dispArr);
+  }
+
+  while (dispArr.includes('x')) {
+    const index = dispArr.indexOf('x');
+    dispArr[index - 1] = `${multiply(Number(dispArr[index - 1]), Number(dispArr[index + 1]))}`;
+    dispArr.splice(index,2);
+    console.log(dispArr);
+  }
+
+  while (dispArr.includes('+')) {
+    const index = dispArr.indexOf('+');
+    dispArr[index - 1] = `${add(Number(dispArr[index - 1]), Number(dispArr[index + 1]))}`;
+    dispArr.splice(index,2);
+    console.log(dispArr);
+  }
+
+  while (dispArr.includes('-')) {
+    const index = dispArr.indexOf('-');
+    dispArr[index - 1] = `${subtract(Number(dispArr[index - 1]), Number(dispArr[index + 1]))}`;
+    dispArr.splice(index,2);
+    console.log(dispArr);
+  }
+
+  current.textContent = dispArr.join('');
+}
+
 // Number event listeners
 zero.addEventListener('click', updateDisplayNum.bind(this, zero.textContent));
 one.addEventListener('click', updateDisplayNum.bind(this, one.textContent));
@@ -74,8 +129,9 @@ decimal.addEventListener('click', updateDisplayNum.bind(this, decimal.textConten
 
 // Operator event listeners
 clr.addEventListener('click', clear);
-add.addEventListener('click', updateDisplayOper.bind(this, add.textContent));
-subtract.addEventListener('click', updateDisplayOper.bind(this, subtract.textContent));
-multiply.addEventListener('click', updateDisplayOper.bind(this, multiply.textContent));
-divide.addEventListener('click', updateDisplayOper.bind(this, divide.textContent));
+addition.addEventListener('click', updateDisplayOper.bind(this, addition.textContent));
+subtraction.addEventListener('click', updateDisplayOper.bind(this, subtraction.textContent));
+multiplication.addEventListener('click', updateDisplayOper.bind(this, multiplication.textContent));
+division.addEventListener('click', updateDisplayOper.bind(this, division.textContent));
 back.addEventListener('click', backspace);
+equals.addEventListener('click', operate);
