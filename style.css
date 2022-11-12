@@ -16,7 +16,7 @@ html {
 }
 
 .display {
-  background-color: bisque;
+  background-color: #eeeee4;
   padding: 20px;
   width: 500px;
   align-self: center;
@@ -34,8 +34,20 @@ html {
 
 .btn {
   padding: 20px;
-  background-color: antiquewhite;
+  background-color: #eeeee4;
   text-align: center;
   cursor: pointer;
   border-radius: 10px;
+}
+
+.btn:active {
+  filter: brightness(85%);
+}
+
+.op {
+  background-color: #abdbe3;
+}
+
+.equals {
+  background-color: #76b5c5;
 }
