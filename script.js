@@ -27,7 +27,8 @@ const nine = document.querySelector('.nine');
 let isOperated = false;
 const divideByZero = 'ERROR, CANNOT DIVIDE BY ZERO';
 let ans = 0;
-const operators = ['+', '-', '/', 'x'];
+const operators = ['+', '-', '/', 'x', '*'];
+const functionalKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 // Updates display with number
 function updateDisplayNum(char) {
@@ -41,6 +42,7 @@ function updateDisplayNum(char) {
 
 // Updates display with operator
 function updateDisplayOper(char) {
+  if (char === '*') char = 'x';
   isOperated === true ? current.textContent = `ans ${char} ` : current.textContent = `${current.textContent} ${char} `;
   isOperated = false;
 }
@@ -54,7 +56,7 @@ function updateDisplayDecimal() {
 
 // Clears display
 function clear() {
-  current.textContent = '0';
+  current.textContent === '0' ? ans = 0 : current.textContent = '0';
 }
 
 // Removes last entry
@@ -185,3 +187,32 @@ division.addEventListener('click', updateDisplayOper.bind(this, division.textCon
 back.addEventListener('click', backspace);
 equals.addEventListener('click', operate);
 answer.addEventListener('click', updateDisplayNum.bind(this, answer.textContent));
+
+// Number event keydown listeners
+document.addEventListener('keydown', function(key) {
+
+  console.log(key.key);
+  if (functionalKeys.includes(key.key)) {
+    updateDisplayNum(key.key);
+  }
+
+  if (operators.includes(key.key)) {
+    updateDisplayOper(key.key);
+  }
+
+  if (key.key === '.') {
+    updateDisplayDecimal();
+  }
+
+  if (key.key === 'Backspace') {
+    backspace();
+  }
+
+  if (key.key === 'Escape') {
+    clear();
+  }
+
+  if (key.key === '=' || key.key === 'Enter') {
+    operate();
+  }
+});
