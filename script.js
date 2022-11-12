@@ -125,10 +125,11 @@ function divide(a, b) {
 }
 
 function operate() {
-  isOperated = true;
   const dispArr = current.textContent.split(' ');
+  if (dispArr.length < 3) return;
   if (dispArr[dispArr.length - 1] === '') return;
-
+  isOperated = true;
+  
   while (dispArr.includes('/')) {
     const index = dispArr.indexOf('/');
     dispArr[index - 1] = `${divide(dispArr[index - 1], dispArr[index + 1])}`;
