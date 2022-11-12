@@ -190,10 +190,12 @@ answer.addEventListener('click', updateDisplayNum.bind(this, answer.textContent)
 
 // Number event keydown listeners
 document.addEventListener('keydown', function(key) {
-
-  console.log(key.key);
   if (functionalKeys.includes(key.key)) {
     updateDisplayNum(key.key);
+  }
+
+  if (key.key === 'p') {
+    updateDisplayNum(answer.textContent);
   }
 
   if (operators.includes(key.key)) {
