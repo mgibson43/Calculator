@@ -57,15 +57,15 @@ html {
 @media (max-width: 896px) {
   .calculator {
     margin-top: 40%;
-    width: 200px;
+    width: 380px;
   }
 
   .display {
-    width: 400px;
+    width: 380px;
   }
 
   .btn-box {
-    width: 400px;
+    width: 380px;
   }
   .btn {
     padding: 20px 5px;
