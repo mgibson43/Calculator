@@ -27,8 +27,9 @@ const nine = document.querySelector('.nine');
 let isOperated = false;
 const divideByZero = 'ERROR, CANNOT DIVIDE BY ZERO';
 let ans = 0;
+const operators = ['+', '-', '/', 'x'];
 
-// Updates display
+// Updates display with number
 function updateDisplayNum(char) {
   if (current.textContent === '0') {
     current.textContent = char;
@@ -38,9 +39,17 @@ function updateDisplayNum(char) {
   isOperated = false;
 }
 
+// Updates display with operator
 function updateDisplayOper(char) {
   isOperated === true ? current.textContent = `ans ${char} ` : current.textContent = `${current.textContent} ${char} `;
   isOperated = false;
+}
+
+// Updates display with decimal
+function updateDisplayDecimal() {
+  const dispArr = current.textContent.split(' ').filter(char => char !== '');
+  const lastValueArr = [...dispArr[dispArr.length - 1]];
+  current.textContent =  !(lastValueArr.includes(operators)) && !(lastValueArr.includes('.')) ? `${current.textContent}.` : `${current.textContent}`;
 }
 
 // Clears display
@@ -64,6 +73,7 @@ function backspace() {
   }
 }
 
+// Operator functions take string and convert to a number then performs specified operation
 function add(a, b) {
   if (a === 'ans') {
     a = ans;
@@ -114,7 +124,8 @@ function divide(a, b) {
 
 function operate() {
   isOperated = true;
-  const dispArr = current.textContent.split(' ').filter(char => char !== ' ');
+  const dispArr = current.textContent.split(' ');
+  if (dispArr[dispArr.length - 1] === '') return;
 
   while (dispArr.includes('/')) {
     const index = dispArr.indexOf('/');
@@ -162,7 +173,7 @@ six.addEventListener('click', updateDisplayNum.bind(this, six.textContent));
 seven.addEventListener('click', updateDisplayNum.bind(this, seven.textContent));
 eight.addEventListener('click', updateDisplayNum.bind(this, eight.textContent));
 nine.addEventListener('click', updateDisplayNum.bind(this, nine.textContent));
-decimal.addEventListener('click', updateDisplayNum.bind(this, decimal.textContent));
+decimal.addEventListener('click', updateDisplayDecimal);
 
 
 // Operator event listeners
