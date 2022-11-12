@@ -12,7 +12,9 @@ html {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin: 0 auto;
   margin-top: 20%;
+
 }
 
 .display {
@@ -50,4 +52,22 @@ html {
 
 .equals {
   background-color: #76b5c5;
+}
+
+@media (max-width: 896px) {
+  .calculator {
+    margin-top: 40%;
+    width: 200px;
+  }
+
+  .display {
+    width: 400px;
+  }
+
+  .btn-box {
+    width: 400px;
+  }
+  .btn {
+    padding: 20px 5px;
+  }
 }
