@@ -10,6 +10,7 @@ const division = document.querySelector('.division');
 const decimal = document.querySelector('.decimal');
 const equals = document.querySelector('.equals');
 const back = document.querySelector('.backspace');
+const answer = document.querySelector('.ans');
 
 // Number DOM Elements
 const zero = document.querySelector('.zero');
@@ -24,6 +25,8 @@ const eight = document.querySelector('.eight');
 const nine = document.querySelector('.nine');
 
 let isOperated = false;
+const divideByZero = 'ERROR, CANNOT DIVIDE BY ZERO';
+let ans = 0;
 
 // Updates display
 function updateDisplayNum(char) {
@@ -62,20 +65,51 @@ function backspace() {
 }
 
 function add(a, b) {
+  if (a === 'ans') {
+    a = ans;
+  }
+  if (b === 'ans') {
+    b = ans;
+  }
+  a = Number(a);
+  b = Number(b);
   return a + b;
 }
 
 function subtract(a, b) {
+  if (a === 'ans') {
+    a = ans;
+  }
+  if (b === 'ans') {
+    b = ans;
+  }
+  a = Number(a);
+  b = Number(b);
   return a - b;
 }
 
 function multiply(a, b) {
+  if (a === 'ans') {
+    a = ans;
+  }
+  if (b === 'ans') {
+    b = ans;
+  }
+  a = Number(a);
+  b = Number(b);
   return a * b;
 }
 
 function divide(a, b) {
-  return a / b;
-  console.log(a, b);
+  if (a === 'ans') {
+    a = ans;
+  }
+  if (b === 'ans') {
+    b = ans;
+  }
+  a = Number(a);
+  b = Number(b);
+  return b === 0 ? divideByZero : a / b;
 }
 
 function operate() {
@@ -84,33 +118,37 @@ function operate() {
 
   while (dispArr.includes('/')) {
     const index = dispArr.indexOf('/');
-    dispArr[index - 1] = `${divide(Number(dispArr[index - 1]), Number(dispArr[index + 1]))}`;
+    dispArr[index - 1] = `${divide(dispArr[index - 1], dispArr[index + 1])}`;
     dispArr.splice(index,2);
-    console.log(dispArr);
+    if (dispArr.includes(divideByZero)) {
+      current.textContent = divideByZero;
+      return;
+    }
   }
+
+  if (dispArr.includes(divideByZero)) return;
 
   while (dispArr.includes('x')) {
     const index = dispArr.indexOf('x');
-    dispArr[index - 1] = `${multiply(Number(dispArr[index - 1]), Number(dispArr[index + 1]))}`;
+    dispArr[index - 1] = `${multiply(dispArr[index - 1], dispArr[index + 1])}`;
     dispArr.splice(index,2);
-    console.log(dispArr);
   }
 
   while (dispArr.includes('+')) {
     const index = dispArr.indexOf('+');
-    dispArr[index - 1] = `${add(Number(dispArr[index - 1]), Number(dispArr[index + 1]))}`;
+    dispArr[index - 1] = `${add(dispArr[index - 1], dispArr[index + 1])}`;
     dispArr.splice(index,2);
-    console.log(dispArr);
   }
 
   while (dispArr.includes('-')) {
     const index = dispArr.indexOf('-');
-    dispArr[index - 1] = `${subtract(Number(dispArr[index - 1]), Number(dispArr[index + 1]))}`;
+    dispArr[index - 1] = `${subtract(dispArr[index - 1], dispArr[index + 1])}`;
     dispArr.splice(index,2);
-    console.log(dispArr);
   }
 
   current.textContent = dispArr.join('');
+  console.log(current.textContent);
+  ans = Number(current.textContent);
 }
 
 // Number event listeners
@@ -135,3 +173,4 @@ multiplication.addEventListener('click', updateDisplayOper.bind(this, multiplica
 division.addEventListener('click', updateDisplayOper.bind(this, division.textContent));
 back.addEventListener('click', backspace);
 equals.addEventListener('click', operate);
+answer.addEventListener('click', updateDisplayNum.bind(this, answer.textContent));
